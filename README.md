@@ -34,18 +34,18 @@ npm add -D automcp
 npx automcp [options]
 ```
 
-Options
+### Options
 
-- --dry-run: Show planned changes without writing
-- --agent <name>: Override detected agent (e.g., cursor, vscode)
-- --config <path>: Override MCP config file path
-- --include-dev: Include devDependencies (default: false)
-- --silent: Minimal output
-- --json: JSON summary output
-- -h, --help: Show help
-- -v, --version: Show version
+- `--dry-run`: Show planned changes without writing
+- `--agent <name>`: Override detected agent (e.g., cursor, vscode)
+- `--config <path>`: Override MCP config file path
+- `--include-dev`: Include devDependencies (default: false)
+- `--silent`: Minimal output
+- `--json`: JSON summary output
+- `-h`, `--help`: Show help
+- `-v`, `--version`: Show version
 
-Examples
+### Examples
 
 ```sh
 # Preview changes only
@@ -53,6 +53,52 @@ npx automcp --dry-run
 
 # Explicitly target Cursor and a custom config path
 npx automcp --agent cursor --config ~/.cursor/mcp.json
+
+# Include devDependencies
+npx automcp --include-dev
+
+# JSON output for CI/automation
+npx automcp --json
+```
+
+### How It Works
+
+1. **Detects your coding agent** (Cursor, VS Code) and locates its MCP config file
+2. **Reads your package.json** dependencies
+3. **Resolves each dependency** to its GitHub repository via `npm view`
+4. **Builds GitMCP URLs** in the format `https://gitmcp.io/owner/repo`
+5. **Updates your MCP config** without overwriting existing entries or creating duplicates
+
+### Supported Agents
+
+- **Cursor** — `.cursor/mcp.json` or `~/.cursor/mcp.json`
+- **VS Code** — `.vscode/mcp.json` or `~/.vscode/mcp.json`
+- **Claude Desktop** — `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+
+Use `--agent` and `--config` flags to override auto-detection.
+
+### Troubleshooting
+
+**Agent not detected**
+```sh
+npx automcp --agent cursor --config ~/.cursor/mcp.json
+```
+
+**Permission errors**
+Ensure you have write access to the MCP config directory.
+
+**Non-GitHub packages skipped**
+Only packages with GitHub repositories are supported. Packages without a `repository` field or with non-GitHub URLs will be skipped.
+
+**URL resolution timeouts**
+The CLI runs `npm view` with a 10-second timeout per package. Slow network or large dependency lists may take time.
+
+### Output Example
+
+```
+Added 5 MCP servers.
+Skipped 2 duplicates.
+Encountered 1 non-fatal errors.
 ```
 
 ## Contributing

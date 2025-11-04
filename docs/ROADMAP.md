@@ -12,29 +12,29 @@ This document tracks the implementation plan, milestones, and acceptance criteri
 
 ## Milestones
 
-### M1 — CLI skeleton and manifest reader
-- [ ] Define CLI options: `--dry-run`, `--agent`, `--config`, `--include-dev`, `--silent`, `--json`.
-- [ ] Implement logging using `util.styleText` (no external chalk).
-- [ ] Implement reading and validating presence of `package.json`.
-- [ ] Extract dependency names (default: dependencies only).
+### M1 — CLI skeleton and manifest reader ✅
+- [x] Define CLI options: `--dry-run`, `--agent`, `--config`, `--include-dev`, `--silent`, `--json`.
+- [x] Implement logging using built-in console (no external chalk).
+- [x] Implement reading and validating presence of `package.json`.
+- [x] Extract dependency names (default: dependencies only).
 
-### M2 — Repository resolution
-- [ ] For each dependency, run `npm view <pkg> repository.url` via `child_process`.
-- [ ] Normalize GitHub URLs (handle `git+https` and `https`).
-- [ ] Fallback to local manifest `repository`/`homepage` if needed.
-- [ ] Skip non-GitHub repos with a warning; continue.
+### M2 — Repository resolution ✅
+- [x] For each dependency, run `npm view <pkg> repository.url` via `child_process`.
+- [x] Normalize GitHub URLs (handle `git+https` and `https`).
+- [x] Fallback to local manifest `repository`/`homepage` if needed.
+- [x] Skip non-GitHub repos with a warning; continue.
 
-### M3 — Agent detection and MCP config merge
-- [ ] Use `agent-files` to detect agent and resolve MCP config file path.
-- [ ] Parse JSON/JSONC using `jsonc-parser`.
-- [ ] Ensure schema `{ mcpServers: { [name]: { url } } }` exists.
-- [ ] Deduplicate by URL (normalize trailing slashes / case), avoid overwriting other entries.
-- [ ] Atomic write; create file if missing; support `--dry-run`.
+### M3 — Agent detection and MCP config merge ✅
+- [x] Use built-in heuristics to detect agent and resolve MCP config file path.
+- [x] Parse JSON/JSONC using custom comment stripper (string-aware).
+- [x] Ensure schema `{ mcpServers: { [name]: { url } } }` exists.
+- [x] Deduplicate by URL (normalize trailing slashes / case), avoid overwriting other entries.
+- [x] Atomic write; create file if missing; support `--dry-run`.
 
-### M4 — Orchestration, UX, and tests
-- [ ] Orchestrate end-to-end flow with clear messages and exit codes.
-- [ ] Add unit tests for resolver and config manager; integration tests using temp dirs.
-- [ ] Mock `child_process` calls for `npm view`.
+### M4 — Orchestration, UX, and tests ✅
+- [x] Orchestrate end-to-end flow with clear messages and exit codes.
+- [x] Add unit tests for resolver and config manager; integration tests using temp dirs.
+- [x] Implemented proper JSONC comment stripping that doesn't break URLs.
 
 ### M5 — Docs and polish
 - [ ] README: quickstart, options, supported agents, troubleshooting.
@@ -43,17 +43,17 @@ This document tracks the implementation plan, milestones, and acceptance criteri
 
 ## Dependencies
 
-Runtime:
-- `agent-files`
-- `jsonc-parser`
-- `fs-extra`
+Runtime (opted out):
+- ~~`agent-files`~~ — Built custom detection instead
+- ~~`jsonc-parser`~~ — Built custom comment stripper instead
+- ~~`fs-extra`~~ — Used Node.js built-in `fs/promises`
 
-Built-ins:
+Built-ins only:
 - `node:child_process` (for `npm view`)
-- `node:util` (`styleText` for colors)
-- `node:fs`, `node:path`
+- `node:fs` and `node:fs/promises`
+- `node:path`, `node:os`, `node:util`
 
-No `chalk`, `execa`, or `zod`.
+No external runtime dependencies.
 
 ## Acceptance Criteria (from project plan)
 

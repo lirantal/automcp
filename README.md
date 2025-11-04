@@ -18,6 +18,18 @@
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Responsible%20Disclosure-yellow.svg" alt="Responsible Disclosure Policy" /></a>
 </p>
 
+## Features
+
+- 🔍 **Auto-detects** your coding agent (Cursor, VS Code, Claude Desktop)
+- 📦 **Scans** your project dependencies from package.json
+- 🔗 **Resolves** each package to its GitHub repository
+- 🌐 **Generates** GitMCP server URLs automatically
+- ✅ **Never overwrites** existing MCP server configurations
+- 🚫 **Prevents duplicates** via smart URL normalization
+- 🏃 **Fast** concurrent resolution with connection pooling
+- 🧪 **Dry-run mode** to preview changes safely
+- 🎯 **Zero runtime dependencies** — uses only Node.js built-ins
+
 ## Install
 
 You can run `automcp` with npx (no install required) or add it to your project.
@@ -69,6 +81,59 @@ npx automcp --json
 4. **Builds GitMCP URLs** in the format `https://gitmcp.io/owner/repo`
 5. **Updates your MCP config** without overwriting existing entries or creating duplicates
 
+## Quick Start
+
+```sh
+# Run in your project directory
+cd my-project
+npx automcp
+
+# Preview changes first
+npx automcp --dry-run
+
+# Include devDependencies
+npx automcp --include-dev
+```
+
+### Real-World Example
+
+Given a project with these dependencies:
+
+```json
+{
+  "dependencies": {
+    "express": "^4.18.0",
+    "lodash": "^4.17.21",
+    "axios": "^1.6.0"
+  }
+}
+```
+
+Running `npx automcp` will:
+
+1. Detect your agent (e.g., Cursor at `~/.cursor/mcp.json`)
+2. Resolve GitHub repos:
+   - express → expressjs/express
+   - lodash → lodash/lodash
+   - axios → axios/axios
+3. Add to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "express Docs": {
+      "url": "https://gitmcp.io/expressjs/express"
+    },
+    "lodash Docs": {
+      "url": "https://gitmcp.io/lodash/lodash"
+    },
+    "axios Docs": {
+      "url": "https://gitmcp.io/axios/axios"
+    }
+  }
+}
+```
+
 ### Supported Agents
 
 - **Cursor** — `.cursor/mcp.json` or `~/.cursor/mcp.json`
@@ -95,11 +160,48 @@ The CLI runs `npm view` with a 10-second timeout per package. Slow network or la
 
 ### Output Example
 
+**Standard output:**
 ```
 Added 5 MCP servers.
 Skipped 2 duplicates.
-Encountered 1 non-fatal errors.
 ```
+
+**With errors:**
+```
+Added 3 MCP servers.
+Skipped 1 duplicate.
+Encountered 2 non-fatal errors.
+```
+
+**JSON output (for CI/automation):**
+```sh
+npx automcp --json
+```
+```json
+{"ok":true,"result":{"added":5,"skipped":2,"errors":0}}
+```
+
+## Node.js Compatibility
+
+- **Requires:** Node.js >= 22.0.0
+- Uses ES2022+ features and Node.js built-in APIs
+- No external runtime dependencies
+
+## CI/CD Integration
+
+Use `--json` and `--silent` flags for automation:
+
+```yaml
+# GitHub Actions example
+- name: Update MCP config
+  run: |
+    npx automcp --json --silent > result.json
+    cat result.json
+```
+
+Exit codes:
+- `0`: Success (including when nothing to add)
+- `1`: Fatal error (config parse failure, permission denied, missing package.json)
 
 ## Contributing
 

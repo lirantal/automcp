@@ -36,10 +36,10 @@ This document tracks the implementation plan, milestones, and acceptance criteri
 - [x] Add unit tests for resolver and config manager; integration tests using temp dirs.
 - [x] Implemented proper JSONC comment stripping that doesn't break URLs.
 
-### M5 — Docs and polish
-- [ ] README: quickstart, options, supported agents, troubleshooting.
-- [ ] Example output; `--json` machine output format.
-- [ ] CI notes; confirm Node.js engine compatibility.
+### M5 — Docs and polish ✅
+- [x] README: quickstart, options, supported agents, troubleshooting.
+- [x] Example output; `--json` machine output format.
+- [x] CI notes; confirm Node.js engine compatibility.
 
 ## Dependencies
 

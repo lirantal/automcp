@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, mock } from 'node:test'
 import assert from 'node:assert'
-import { add } from '../src/main.ts'
+import { runAutomcp } from '../src/main.ts'
 
 describe('CLI program', () => {
 
@@ -9,9 +9,19 @@ describe('CLI program', () => {
     mock.reset()
   });
 
-  test('Program sums two arguments', async (t) => {
-    const result = await add(1, 1);
-    assert.strictEqual(result, 2);
+  test('CLI run returns a result shape', async () => {
+    const result = await runAutomcp({
+      dryRun: true,
+      includeDev: false,
+      silent: true,
+      json: false,
+      help: false,
+      version: false,
+    })
+    assert.ok(result)
+    assert.strictEqual(typeof result.added, 'number')
+    assert.strictEqual(typeof result.skipped, 'number')
+    assert.strictEqual(typeof result.errors, 'number')
   })
 
 });

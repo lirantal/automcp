@@ -20,14 +20,39 @@
 
 ## Install
 
+You can run `automcp` with npx (no install required) or add it to your project.
+
 ```sh
-npm add automcp
+npx automcp
+# or
+npm add -D automcp
 ```
+
 ## Usage: CLI
 
-```bash
-// @TODO
-const {} = require('automcp')
+```sh
+npx automcp [options]
+```
+
+Options
+
+- --dry-run: Show planned changes without writing
+- --agent <name>: Override detected agent (e.g., cursor, vscode)
+- --config <path>: Override MCP config file path
+- --include-dev: Include devDependencies (default: false)
+- --silent: Minimal output
+- --json: JSON summary output
+- -h, --help: Show help
+- -v, --version: Show version
+
+Examples
+
+```sh
+# Preview changes only
+npx automcp --dry-run
+
+# Explicitly target Cursor and a custom config path
+npx automcp --agent cursor --config ~/.cursor/mcp.json
 ```
 
 ## Contributing

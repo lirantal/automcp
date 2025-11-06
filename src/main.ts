@@ -12,7 +12,7 @@ export async function runAutomcp (options: CliOptions): Promise<AutomcpResult> {
   const agentConfig = detectEnvironment(cwd, options.agent, options.config)
   if (!agentConfig) {
     throw new Error(
-      'Could not detect coding agent. Use --agent and --config to specify manually.'
+      'NO_LOCAL_CONFIG:Could not detect a local coding agent configuration. Use --agent and --config to specify manually.'
     )
   }
 

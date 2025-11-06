@@ -73,6 +73,57 @@ npx automcp --include-dev
 npx automcp --json
 ```
 
+### Understanding `--agent` and `--config` Flags
+
+The `--agent` and `--config` flags are **flexible and work independently or together**. You don't need to provide both!
+
+#### Usage Patterns
+
+| Command | Agent Detection | Config Path | When to Use |
+|---------|----------------|-------------|-------------|
+| `npx automcp` | Auto-detected from `.cursor/` or `.vscode/` | Auto-detected | ✅ **Recommended:** Let AutoMCP detect everything |
+| `npx automcp --agent cursor` | Use "cursor" | Auto-resolves to `.cursor/mcp.json` | When you have multiple agents and want to target one |
+| `npx automcp --config /path/to/mcp.json` | Inferred from path | Use specified path | When config is in a custom location |
+| `npx automcp --agent cursor --config /custom/path.json` | Use "cursor" | Use specified path | Full manual control |
+
+#### How Each Flag Works
+
+**Using `--agent` alone:**
+- Resolves the config path automatically based on the agent name
+- `cursor` → `.cursor/mcp.json` in your project
+- `vscode` → `.vscode/mcp.json` in your project
+- Creates the file if it doesn't exist
+
+**Using `--config` alone:**
+- Infers the agent name from the path
+- Path contains "cursor" → agent = "cursor"
+- Path contains "vscode" → agent = "vscode"
+- Path contains "claude" → agent = "claude-desktop"
+- Otherwise → agent = "unknown"
+
+**Using both together:**
+- Explicitly sets both values with no auto-detection
+- Useful for custom setups or non-standard paths
+
+#### Examples
+
+```sh
+# Let AutoMCP detect both (most common)
+npx automcp
+
+# Target Cursor specifically, auto-resolve config path
+npx automcp --agent cursor
+
+# Use a custom config path, agent inferred as "cursor"
+npx automcp --config ~/.cursor/mcp.json
+
+# Use a custom config path, agent inferred as "unknown"
+npx automcp --config /tmp/my-mcp-config.json
+
+# Explicitly set both for full control
+npx automcp --agent cursor --config /custom/location/mcp.json
+```
+
 ### How It Works
 
 1. **Detects your coding agent** (Cursor, VS Code) and locates its **local project** MCP config file

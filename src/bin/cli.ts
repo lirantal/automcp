@@ -69,8 +69,36 @@ async function main () {
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
-    log.error(`Fatal error: ${message}`)
-    process.exitCode = 1
+
+    // Handle specific error types with better UX
+    if (message.startsWith('NO_LOCAL_CONFIG:')) {
+      const cleanMessage = message.replace('NO_LOCAL_CONFIG:', '')
+
+      if (options.json) {
+        log.json({
+          ok: false,
+          error: 'NO_LOCAL_CONFIG',
+          message: cleanMessage,
+          suggestion: 'Create a local config (.cursor/mcp.json or .vscode/mcp.json) or use --agent and --config flags'
+        })
+      } else {
+        log.info(`\nℹ️  ${cleanMessage}\n`)
+        log.info('💡 AutoMCP only updates local project configurations to avoid')
+        log.info('   modifying global agent settings unintentionally.\n')
+        log.info('   To proceed, either:')
+        log.info('   • Create a local config: .cursor/mcp.json or .vscode/mcp.json')
+        log.info('   • Use --agent and --config flags to specify paths manually\n')
+      }
+      process.exitCode = 0  // Not a fatal error, just nothing to do
+    } else {
+      // Actual fatal errors (parse failures, permission errors, etc.)
+      if (options.json) {
+        log.json({ ok: false, error: message })
+      } else {
+        log.error(`Fatal error: ${message}`)
+      }
+      process.exitCode = 1
+    }
   }
 }
 

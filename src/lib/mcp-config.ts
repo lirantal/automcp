@@ -51,7 +51,9 @@ export async function updateMcpConfig (
 
   // Normalize existing URLs for comparison (case-insensitive, no trailing slash)
   const existingUrls = new Set(
-    Object.values(config.mcpServers).map(s => normalizeUrl(s.url))
+    Object.values(config.mcpServers)
+      .filter(s => s && typeof s.url === 'string')
+      .map(s => normalizeUrl(s.url))
   )
 
   for (const server of newServers) {
@@ -98,7 +100,11 @@ async function writeMcpConfig (path: string, config: McpConfig): Promise<void> {
 /**
  * Normalize a URL for comparison: lowercase, remove trailing slash.
  */
+/**
+ * Normalize URL for comparison (case-insensitive, no trailing slash)
+ */
 function normalizeUrl (url: string): string {
+  if (!url || typeof url !== 'string') return ''
   return url.toLowerCase().replace(/\/$/, '')
 }
 

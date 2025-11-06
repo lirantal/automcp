@@ -1,6 +1,5 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { homedir } from 'node:os'
 
 export interface AgentConfig {
   name: string
@@ -42,7 +41,7 @@ export function detectEnvironment (
     throw new Error(`Could not locate MCP config for agent: ${agentOverride}`)
   }
 
-  // Auto-detect based on cwd
+  // Auto-detect based on cwd - only check local project configs
   if (existsSync(join(cwd, '.cursor'))) {
     const configPath = resolveConfigPath('cursor', cwd)
     if (configPath) return { name: 'cursor', configPath }
@@ -53,18 +52,7 @@ export function detectEnvironment (
     if (configPath) return { name: 'vscode', configPath }
   }
 
-  // Fallback: check home directory for common configs
-  const home = homedir()
-  const cursorHome = join(home, '.cursor', 'mcp.json')
-  if (existsSync(cursorHome)) {
-    return { name: 'cursor', configPath: cursorHome }
-  }
-
-  const vscodeHome = join(home, '.vscode', 'mcp.json')
-  if (existsSync(vscodeHome)) {
-    return { name: 'vscode', configPath: vscodeHome }
-  }
-
+  // No local agent config found - don't update global configs
   return null
 }
 
@@ -76,22 +64,15 @@ function inferAgentFromPath (path: string): string {
 }
 
 function resolveConfigPath (agent: string, cwd: string): string | null {
-  const home = homedir()
-
-  // Common config paths per agent
+  // Only check local project config paths - don't update global configs
   const paths: Record<string, string[]> = {
     cursor: [
       join(cwd, '.cursor', 'mcp.json'),
-      join(home, '.cursor', 'mcp.json'),
     ],
     vscode: [
       join(cwd, '.vscode', 'mcp.json'),
-      join(home, '.vscode', 'mcp.json'),
-      join(home, 'Library', 'Application Support', 'Code', 'User', 'globalStorage', 'mcp.json'),
     ],
-    'claude-desktop': [
-      join(home, 'Library', 'Application Support', 'Claude', 'claude_desktop_config.json'),
-    ],
+    'claude-desktop': [], // Claude Desktop doesn't have local project configs
   }
 
   const candidates = paths[agent] || []

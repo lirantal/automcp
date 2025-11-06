@@ -75,11 +75,13 @@ npx automcp --json
 
 ### How It Works
 
-1. **Detects your coding agent** (Cursor, VS Code) and locates its MCP config file
+1. **Detects your coding agent** (Cursor, VS Code) and locates its **local project** MCP config file
 2. **Reads your package.json** dependencies
 3. **Resolves each dependency** to its GitHub repository via `npm view`
 4. **Builds GitMCP URLs** in the format `https://gitmcp.io/owner/repo`
 5. **Updates your MCP config** without overwriting existing entries or creating duplicates
+
+> **Note:** AutoMCP only updates local project configurations (e.g., `.cursor/mcp.json` or `.vscode/mcp.json` in your project directory). It does not modify global agent configurations in your home directory.
 
 ## Quick Start
 
@@ -111,7 +113,7 @@ Given a project with these dependencies:
 
 Running `npx automcp` will:
 
-1. Detect your agent (e.g., Cursor at `~/.cursor/mcp.json`)
+1. Detect your agent (e.g., Cursor at `.cursor/mcp.json` in your project)
 2. Resolve GitHub repos:
    - express → expressjs/express
    - lodash → lodash/lodash
@@ -136,11 +138,14 @@ Running `npx automcp` will:
 
 ### Supported Agents
 
-- **Cursor** — `.cursor/mcp.json` or `~/.cursor/mcp.json`
-- **VS Code** — `.vscode/mcp.json` or `~/.vscode/mcp.json`
-- **Claude Desktop** — `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+AutoMCP looks for agent configurations in the following locations:
 
-Use `--agent` and `--config` flags to override auto-detection.
+- **Cursor** — `.cursor/mcp.json` (in your project directory)
+- **VS Code** — `.vscode/mcp.json` (in your project directory)
+
+Use `--agent` and `--config` flags to override auto-detection or to specify a custom config location.
+
+> **Important:** AutoMCP only updates local project configurations. If no local agent configuration is found (e.g., no `.cursor/` or `.vscode/` directory in your project), the tool will exit without making changes. This prevents accidental updates to global configurations.
 
 ### Troubleshooting
 

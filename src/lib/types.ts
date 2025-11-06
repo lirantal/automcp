@@ -9,8 +9,18 @@ export interface CliOptions {
   version: boolean
 }
 
+export interface ServerEntry {
+  name: string
+  url: string
+}
+
 export interface AutomcpResult {
   added: number
   skipped: number
   errors: number
+  addedServers: ServerEntry[]
+  skippedServers: ServerEntry[]
+  configPath: string
+  agentName: string
+  dryRun: boolean
 }

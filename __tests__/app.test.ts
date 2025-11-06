@@ -25,6 +25,11 @@ describe('CLI program', () => {
     assert.strictEqual(typeof result.added, 'number')
     assert.strictEqual(typeof result.skipped, 'number')
     assert.strictEqual(typeof result.errors, 'number')
+    assert.ok(Array.isArray(result.addedServers))
+    assert.ok(Array.isArray(result.skippedServers))
+    assert.strictEqual(typeof result.configPath, 'string')
+    assert.strictEqual(typeof result.agentName, 'string')
+    assert.strictEqual(typeof result.dryRun, 'boolean')
   })
 
 });

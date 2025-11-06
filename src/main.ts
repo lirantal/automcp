@@ -21,7 +21,16 @@ export async function runAutomcp (options: CliOptions): Promise<AutomcpResult> {
   const dependencies = extractDependencies(pkg, options.includeDev)
 
   if (dependencies.length === 0) {
-    return { added: 0, skipped: 0, errors: 0 }
+    return {
+      added: 0,
+      skipped: 0,
+      errors: 0,
+      addedServers: [],
+      skippedServers: [],
+      configPath: agentConfig.configPath,
+      agentName: agentConfig.name,
+      dryRun: options.dryRun,
+    }
   }
 
   // 3. Resolve GitHub repos for each dependency
@@ -37,7 +46,16 @@ export async function runAutomcp (options: CliOptions): Promise<AutomcpResult> {
   const servers = buildGitMcpServers(repoMap)
 
   if (servers.length === 0) {
-    return { added: 0, skipped: 0, errors }
+    return {
+      added: 0,
+      skipped: 0,
+      errors,
+      addedServers: [],
+      skippedServers: [],
+      configPath: agentConfig.configPath,
+      agentName: agentConfig.name,
+      dryRun: options.dryRun,
+    }
   }
 
   // 5. Update MCP config
@@ -47,5 +65,10 @@ export async function runAutomcp (options: CliOptions): Promise<AutomcpResult> {
     added: result.added.length,
     skipped: result.skipped.length,
     errors,
+    addedServers: result.added,
+    skippedServers: result.skipped,
+    configPath: agentConfig.configPath,
+    agentName: agentConfig.name,
+    dryRun: options.dryRun,
   }
 }

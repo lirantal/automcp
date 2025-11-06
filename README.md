@@ -162,15 +162,52 @@ The CLI runs `npm view` with a 10-second timeout per package. Slow network or la
 
 **Standard output:**
 ```
-Added 5 MCP servers.
-Skipped 2 duplicates.
+🔍 Agent: cursor
+📝 Config: /Users/username/.cursor/mcp.json
+
+✅ Added 3 MCP servers:
+
+   • express Docs
+     https://gitmcp.io/expressjs/express
+
+   • lodash Docs
+     https://gitmcp.io/lodash/lodash
+
+   • axios Docs
+     https://gitmcp.io/axios/axios
+
+✨ MCP config updated successfully!
 ```
 
-**With errors:**
+**With dry-run:**
 ```
-Added 3 MCP servers.
-Skipped 1 duplicate.
-Encountered 2 non-fatal errors.
+🔍 Agent: cursor
+📝 Config: /Users/username/.cursor/mcp.json
+🧪 Dry-run mode: no files will be modified
+
+✅ Added 5 MCP servers:
+
+   • express Docs
+     https://gitmcp.io/expressjs/express
+
+   • lodash Docs
+     https://gitmcp.io/lodash/lodash
+
+💡 Run without --dry-run to apply these changes.
+```
+
+**With duplicates:**
+```
+🔍 Agent: cursor
+📝 Config: /Users/username/.cursor/mcp.json
+
+⏭️  Skipped 2 duplicates:
+
+   • express Docs
+     https://gitmcp.io/expressjs/express
+
+   • lodash Docs
+     https://gitmcp.io/lodash/lodash
 ```
 
 **JSON output (for CI/automation):**
@@ -178,7 +215,24 @@ Encountered 2 non-fatal errors.
 npx automcp --json
 ```
 ```json
-{"ok":true,"result":{"added":5,"skipped":2,"errors":0}}
+{
+  "ok": true,
+  "result": {
+    "added": 3,
+    "skipped": 0,
+    "errors": 0,
+    "addedServers": [
+      {
+        "name": "express Docs",
+        "url": "https://gitmcp.io/expressjs/express"
+      }
+    ],
+    "skippedServers": [],
+    "configPath": "/Users/username/.cursor/mcp.json",
+    "agentName": "cursor",
+    "dryRun": false
+  }
+}
 ```
 
 ## Node.js Compatibility

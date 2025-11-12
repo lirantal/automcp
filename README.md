@@ -18,6 +18,9 @@
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Responsible%20Disclosure-yellow.svg?type=h" alt="Responsible Disclosure Policy" /></a>
 </p>
 
+![AutoMCP screenshot](./.github/automcp-screenshot.png)
+
+
 ## Features
 
 - 🔍 **Auto-detects** your coding agent (Cursor, VS Code, Claude Desktop)
@@ -41,6 +44,8 @@ npm add -D automcp
 ```
 
 ## Usage: CLI
+
+<https://github.com/user-attachments/assets/305f75f8-0fec-4dd2-886c-d5f23a5e8a7e>
 
 ```sh
 npx automcp [options]

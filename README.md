@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.org/package/automcp?echo="><img src="https://badgen.net/npm/v/automcp?type=h" alt="npm version"/></a>
-  <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/license/automcp?type=h" alt="license"/></a>
-  <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/dt/automcp?type=h" alt="downloads"/></a>
+  <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/v/automcp" alt="npm version"/></a>
+  <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/license/automcp" alt="license"/></a>
+  <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/dt/automcp" alt="downloads"/></a>
   <a href="https://github.com/lirantal/automcp/actions?workflow=CI"><img src="https://github.com/lirantal/automcp/workflows/CI/badge.svg?type=h" alt="build"/></a>
   <a href="https://codecov.io/gh/lirantal/automcp"><img src="https://badgen.net/codecov/c/github/lirantal/automcp?type=h" alt="codecov"/></a>
   <a href="https://snyk.io/test/github/lirantal/automcp"><img src="https://snyk.io/test/github/lirantal/automcp/badge.svg?type=h" alt="Known Vulnerabilities"/></a>

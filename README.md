@@ -14,7 +14,6 @@
   <a href="https://www.npmjs.org/package/automcp"><img src="https://badgen.net/npm/dt/automcp" alt="downloads"/></a>
   <a href="https://github.com/lirantal/automcp/actions?workflow=CI"><img src="https://github.com/lirantal/automcp/workflows/CI/badge.svg?type=h" alt="build"/></a>
   <a href="https://codecov.io/gh/lirantal/automcp"><img src="https://badgen.net/codecov/c/github/lirantal/automcp?type=h" alt="codecov"/></a>
-  <a href="https://snyk.io/test/github/lirantal/automcp"><img src="https://snyk.io/test/github/lirantal/automcp/badge.svg?type=h" alt="Known Vulnerabilities"/></a>
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Responsible%20Disclosure-yellow.svg?type=h" alt="Responsible Disclosure Policy" /></a>
 </p>
 

@@ -8,6 +8,8 @@ updates:
       # Prefix all commit messages with "chore: "
       prefix: "chore"
     open-pull-requests-limit: 10
+    # Use the 'dependencies' default label and add
+    # the 'automerge' one for automerge github action support
     labels:
       - "dependencies"
       - "automerge"

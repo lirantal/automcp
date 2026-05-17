@@ -319,7 +319,7 @@ Exit codes:
 
 ## Contributing
 
-Please consult [CONTRIBUTING](./.github/CONTRIBUTING.md) for guidelines on contributing to this project.
+Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
 
 ## Author
 

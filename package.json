@@ -77,7 +77,6 @@
     "lint-staged": "^16.2.7",
     "lockfile-lint": "^4.14.0",
     "markdownlint-cli": "0.45.0",
-    "markdownlint-cli": "0.45.0",
     "neostandard": "^0.12.2",
     "tsup": "^8.1.0",
     "tsx": "^4.19.4",

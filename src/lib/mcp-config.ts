@@ -28,7 +28,7 @@ export async function readMcpConfig (path: string): Promise<McpConfig> {
     return JSON.parse(stripped) as McpConfig
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
-    throw new Error(`Failed to parse MCP config at ${path}: ${message}`)
+    throw new Error(`Failed to parse MCP config at ${path}: ${message}`, { cause: err })
   }
 }
 

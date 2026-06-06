@@ -21,7 +21,7 @@ export async function readPackageManifest (cwd: string): Promise<PackageJson> {
     return JSON.parse(content) as PackageJson
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
-    throw new Error(`Failed to read package.json: ${message}`)
+    throw new Error(`Failed to read package.json: ${message}`, { cause: err })
   }
 }
 

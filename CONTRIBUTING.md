@@ -90,7 +90,7 @@ If any of the above doesn't work on a fresh checkout, that's a bug, please open 
 
 ### Environment setup
 
-AI coding agents running from the host should use the repository's documented environment setup, if present, before selecting the mounted repository folder.
+Before making changes, use the repository's documented development environment so local tools, dependencies, and environment hooks match the expected setup.
 
 ### Release readiness
 

@@ -317,6 +317,10 @@ Exit codes:
 - `0`: Success (including when nothing to add)
 - `1`: Fatal error (config parse failure, permission denied, missing package.json)
 
+## Documentation
+
+- [Project documentation](./docs/README.md) - development, testing, architecture, and conventions.
+
 ## Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.

@@ -1,8 +1,0 @@
-# Exclude URLs that are known to return non-2xx responses to automated link checkers
-exclude = [
-  # npmjs.com and npmjs.org return 403 Forbidden to automated link checkers
-  "https://www.npmjs.com/.*",
-  "https://www.npmjs.org/.*",
-  # GitHub Actions workflow URL intermittently returns 5xx to automated checks
-  "https://github.com/lirantal/automcp/actions/workflows/ci.yml",
-]

@@ -94,3 +94,22 @@ npm run release
 pnpm run version
 pnpm run release
 ```
+
+## npm trusted publishing
+
+Publishing uses GitHub Actions OIDC, with Node.js 24 and `id-token: write`.
+No `NPM_TOKEN` secret is needed.
+
+In this package's npm settings, register a GitHub trusted publisher with:
+
++- Owner: `lirantal`
++- Repository: `automcp`
++- Workflow filename: `release.yml`
++- Environment: leave empty
++- Allowed action: enable `npm publish`
+
+See [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/).
+
+Keep the root versions in `package.json` and `package-lock.json` aligned with
+the last published release before applying a new changeset. The workflow rejects
+the `0.0.0-development` placeholder used by semantic-release.

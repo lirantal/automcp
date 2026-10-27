@@ -1,6 +1,6 @@
 {
   "name": "automcp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "AutoMCP detects your package manifest file and automatically adds relevant MCP (Model Context Protocol) servers to the coding agents it detects",
   "types": "dist/main.d.ts",
   "type": "module",

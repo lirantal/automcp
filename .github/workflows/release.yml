@@ -24,6 +24,16 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Validate release version
+        run: |
+          node --input-type=commonjs <<'NODE'
+          const { version } = require('./package.json')
+          if (version === '0.0.0-development') {
+            throw new Error('Replace the development placeholder before Changesets publishing')
+          }
+          NODE
       - name: install dependencies
         run: npm ci
       - name: build project
@@ -37,4 +47,5 @@ jobs:
           pr-title: "chore: new release candidate"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # npm trusted publishing uses the workflow's OIDC identity.
+          NPM_TOKEN: ''
